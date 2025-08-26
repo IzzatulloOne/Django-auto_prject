@@ -1,0 +1,25 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #eaeaea;
+}
+.card {
+    border: none;
+    transition: 0.3s;
+}
+.card:hover {
+    transform: scale(1.03);
+}
+a {
+    color: #4caf50;
+}
+a:hover {
+    color: #66ff99;
+}
+.btn-success {
+    background-color: #4caf50;
+    border: none;
+}
+.btn-success:hover {
+    background-color: #66bb6a;
+}
