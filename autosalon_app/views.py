@@ -1,18 +1,19 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Brands, Cars
+from .models import Brands, Cars, Comment
 
 
-from django.shortcuts import render
-from .models import Brands, Cars
 
-from django.shortcuts import render
-from .models import Brands, Cars
+def car_detail(request, car_id):
+    car = get_object_or_404(Cars, id=car_id)
 
-from django.shortcuts import render
-from .models import Brands, Cars
+    if request.method == "POST":
+        name = request.POST.get("name")
+        text = request.POST.get("text")
+        if name and text:
+            Comment.objects.create(car=car, name=name, text=text)
 
-from django.shortcuts import render
-from .models import Brands, Cars
+    comments = car.comments.all()
+    return render(request, "auto_web/car_detail.html", {"car": car, "comments": comments})
 
 def all(request):
     brands = Brands.objects.all()
@@ -63,9 +64,18 @@ def all(request):
     }
     return render(request, 'auto_web/index.html', context)
 
+def index(request):
+    cars = Cars.objects.all()
 
+    if request.method == "POST":
+        car_id = request.POST.get("car_id")
+        name = request.POST.get("name")
+        text = request.POST.get("text")
+        if car_id and name and text:
+            Comment.objects.create(car_id=car_id, name=name, text=text)
+            return redirect("index")  # чтобы после POST не было повторной отправки формы
 
-
+    return render(request, "auto_web/index.html", {"car": cars})
 
 def car_detail(request, car_id):
     brands = Brands.objects.all()
